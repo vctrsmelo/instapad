@@ -13,6 +13,8 @@
 		BE53B54C20E1D41F0039019B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE53B54A20E1D41F0039019B /* Main.storyboard */; };
 		BE53B54E20E1D4370039019B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE53B54D20E1D4370039019B /* Assets.xcassets */; };
 		BE53B55120E1D4370039019B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE53B54F20E1D4370039019B /* LaunchScreen.storyboard */; };
+		EE9B440A20E2CEF50042D3D9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE9B440920E2CEF50042D3D9 /* StoreKit.framework */; };
+		EE9B440C20E2D0120042D3D9 /* IAPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9B440B20E2D0120042D3D9 /* IAPHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		BE53B55020E1D4370039019B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE53B55220E1D4370039019B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E90C4545CF0A4C29FD80F630 /* Pods-Instapad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instapad.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Instapad/Pods-Instapad.debug.xcconfig"; sourceTree = "<group>"; };
+		EE9B440920E2CEF50042D3D9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		EE9B440B20E2D0120042D3D9 /* IAPHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +38,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58A867E374A55272320F51EB /* libPods-Instapad.a in Frameworks */,
+				EE9B440A20E2CEF50042D3D9 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +57,7 @@
 		B7B8645281614CB9C1848058 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE9B440920E2CEF50042D3D9 /* StoreKit.framework */,
 				18CBB1EAE78F74D75E25E586 /* libPods-Instapad.a */,
 			);
 			name = Frameworks;
@@ -84,6 +90,7 @@
 				BE53B54D20E1D4370039019B /* Assets.xcassets */,
 				BE53B54F20E1D4370039019B /* LaunchScreen.storyboard */,
 				BE53B55220E1D4370039019B /* Info.plist */,
+				EE9B440B20E2D0120042D3D9 /* IAPHandler.swift */,
 			);
 			path = Instapad;
 			sourceTree = "<group>";
@@ -121,6 +128,11 @@
 				TargetAttributes = {
 					BE53B54220E1D41E0039019B = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -181,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE9B440C20E2D0120042D3D9 /* IAPHandler.swift in Sources */,
 				BE53B54920E1D41F0039019B /* ViewController.swift in Sources */,
 				BE53B54720E1D41F0039019B /* AppDelegate.swift in Sources */,
 			);
