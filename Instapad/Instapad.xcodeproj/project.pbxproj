@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58A867E374A55272320F51EB /* libPods-Instapad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CBB1EAE78F74D75E25E586 /* libPods-Instapad.a */; };
 		BE53B54720E1D41F0039019B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53B54620E1D41F0039019B /* AppDelegate.swift */; };
 		BE53B54920E1D41F0039019B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53B54820E1D41F0039019B /* ViewController.swift */; };
 		BE53B54C20E1D41F0039019B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE53B54A20E1D41F0039019B /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18CBB1EAE78F74D75E25E586 /* libPods-Instapad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Instapad.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E9E5A0DD224A645C57F538B /* Pods-Instapad.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instapad.release.xcconfig"; path = "Pods/Target Support Files/Pods-Instapad/Pods-Instapad.release.xcconfig"; sourceTree = "<group>"; };
 		BE53B54320E1D41E0039019B /* Instapad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instapad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE53B54620E1D41F0039019B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE53B54820E1D41F0039019B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,7 @@
 		BE53B54D20E1D4370039019B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE53B55020E1D4370039019B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BE53B55220E1D4370039019B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E90C4545CF0A4C29FD80F630 /* Pods-Instapad.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instapad.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Instapad/Pods-Instapad.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58A867E374A55272320F51EB /* libPods-Instapad.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B4FBFD8A843717687A0992C7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E90C4545CF0A4C29FD80F630 /* Pods-Instapad.debug.xcconfig */,
+				1E9E5A0DD224A645C57F538B /* Pods-Instapad.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B7B8645281614CB9C1848058 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18CBB1EAE78F74D75E25E586 /* libPods-Instapad.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BE53B53A20E1D41E0039019B = {
 			isa = PBXGroup;
 			children = (
 				BE53B54520E1D41E0039019B /* Instapad */,
 				BE53B54420E1D41E0039019B /* Products */,
+				B4FBFD8A843717687A0992C7 /* Pods */,
+				B7B8645281614CB9C1848058 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +95,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BE53B55520E1D4370039019B /* Build configuration list for PBXNativeTarget "Instapad" */;
 			buildPhases = (
+				022A2AE7B607739912930312 /* [CP] Check Pods Manifest.lock */,
 				BE53B53F20E1D41E0039019B /* Sources */,
 				BE53B54020E1D41E0039019B /* Frameworks */,
 				BE53B54120E1D41E0039019B /* Resources */,
@@ -129,6 +154,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		022A2AE7B607739912930312 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Instapad-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BE53B53F20E1D41E0039019B /* Sources */ = {
@@ -278,6 +324,7 @@
 		};
 		BE53B55620E1D4370039019B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E90C4545CF0A4C29FD80F630 /* Pods-Instapad.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -290,12 +337,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.victormelo.Instapad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
 		BE53B55720E1D4370039019B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E9E5A0DD224A645C57F538B /* Pods-Instapad.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -308,7 +356,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.victormelo.Instapad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

@@ -1,0 +1,3 @@
+target 'Instapad' do
+    pod 'Google-Mobile-Ads-SDK'
+end
