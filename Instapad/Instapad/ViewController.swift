@@ -14,7 +14,7 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView!
     var optionsButton: UIButton!
-    
+    var activityIndicator: UIActivityIndicatorView!
     
     var bannerView: GADBannerView!
     
@@ -31,18 +31,42 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupActivityIndicator()
         setupWebView()
-        setupBannerView()
         setupButton()
-        setupInAppPurchases()
         
+        setupInAppPurchases()
+
+        // if did buy removeAds
+        if (UserDefaults.standard.bool(forKey: "PurchasedRemoveAds")) == true {
+           purchasedRemoveAds()
+        } else {
+           setupBannerView()
+        }
+        
+    }
+    
+    private func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView()
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.color = UIColor.black
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        activityIndicator.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
     private func setupInAppPurchases() {
         IAPHandler.shared.fetchAvailableProducts()
         IAPHandler.shared.purchaseStatusBlock = {[weak self] (type) in
             guard let strongSelf = self else{ return }
-            if type == .purchased {
+            if type == .purchased || type == .restored {
+                strongSelf.purchasedRemoveAds()
                 let alertView = UIAlertController(title: "", message: type.message(), preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: { (alert) in
                     
@@ -53,18 +77,27 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         }
     }
     
+    private func purchasedRemoveAds() {
+        if let bannerView = bannerView {
+            bannerView.isHidden = true
+            if bannerView.superview != nil {
+                bannerView.removeFromSuperview()
+            }
+        }
+        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
     private func setupButton() {
         optionsButton = UIButton()
-        optionsButton.setTitle("options", for: UIControlState.normal)
-        optionsButton.setTitleColor(UIColor.blue, for: UIControlState.normal)
+        optionsButton.setBackgroundImage(#imageLiteral(resourceName: "settings"), for: .normal)
         
         view.addSubview(optionsButton)
         
         optionsButton.translatesAutoresizingMaskIntoConstraints = false
-        optionsButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        optionsButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         optionsButton.topAnchor.constraint(equalTo: view.topAnchor, constant:70).isActive = true
-        optionsButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 10).isActive = true
-        optionsButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        optionsButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        optionsButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         view.bringSubview(toFront: optionsButton)
         
@@ -82,6 +115,12 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             IAPHandler.shared.purchaseMyProduct(index: 0)
             
          }))
+        
+        alert.addAction(UIAlertAction(title: "Restore Purchase", style: .default, handler: { action in
+        
+            IAPHandler.shared.restorePurchase()
+            
+        }))
         
         alert.addAction(UIAlertAction(title: "Return", style: .cancel, handler: nil))
         
@@ -106,6 +145,7 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         webView.evaluateJavaScript("var instaDownload = document.getElementsByClassName('MFkQJ')[0]; instaDownload.style.visibility = 'hidden'; instaDownload.style.height = '0px'; var instaDownload2 = document.getElementsByClassName('fP5IM')[0]; instaDownload2.style.visibility = 'hidden'; instaDownload2.style.height = '0px';")  { (_, _) in
             webView.isHidden = false
+            self.activityIndicator.stopAnimating()
         }
         
     }
@@ -136,10 +176,7 @@ extension ViewController {
             // bottom layout guide and view edges.
             positionBannerViewFullWidthAtBottomOfView(bannerView)
         }
-        
-        
-//        bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        bannerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
         bannerView.topAnchor.constraint(equalTo: webView.bottomAnchor).isActive = true
         
         bannerView.adUnitID = (UIApplication.shared.delegate as! AppDelegate).AD_UNIT_ID

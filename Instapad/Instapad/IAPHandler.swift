@@ -1,18 +1,3 @@
-//
-//  IAPHandler.swift
-//  Instapad
-//
-//  Created by Victor S Melo on 26/06/18.
-//  Copyright © 2018 Victor Melo. All rights reserved.
-//
-
-//
-//  IAPHandler.swift
-//
-//  Created by Dejan Atanasov on 13/07/2017.
-//  Copyright © 2017 Dejan Atanasov. All rights reserved.
-//
-
 import UIKit
 import StoreKit
 
@@ -43,8 +28,11 @@ class IAPHandler: NSObject {
     var purchaseStatusBlock: ((IAPHandlerAlertType) -> Void)?
     
     // MARK: - MAKE PURCHASE OF A PRODUCT
+    
+    /// Returns a boolean value whether the device is able to make purchases or not.
     func canMakePurchases() -> Bool {  return SKPaymentQueue.canMakePayments()  }
     
+    /// Use this function for initiating a purchase. This function will raise the payment dialog. Send index to get the correct IAP product from the iapProducts array.
     func purchaseMyProduct(index: Int){
         if iapProducts.count == 0 { return }
         
@@ -62,6 +50,8 @@ class IAPHandler: NSObject {
     }
     
     // MARK: - RESTORE PURCHASE
+    
+    /// Function for restoring the IAP. Used if the user changes a device, and he already owns a non-consumable IAP in your app.
     func restorePurchase(){
         SKPaymentQueue.default().add(self)
         SKPaymentQueue.default().restoreCompletedTransactions()
@@ -69,6 +59,8 @@ class IAPHandler: NSObject {
     
     
     // MARK: - FETCH AVAILABLE IAP PRODUCTS
+    
+    /// Create a collection of product ID's that you want to use, by adding all of them into an NSSet object. Remember to set the delegate method, so you can get the SKProduct results back.
     func fetchAvailableProducts(){
         
         // Put here your IAP Products ID's
@@ -79,10 +71,16 @@ class IAPHandler: NSObject {
         productsRequest.delegate = self
         productsRequest.start()
     }
+    
+    func persistPurchase() {
+        UserDefaults.standard.set(true, forKey: "PurchasedRemoveAds")
+    }
 }
 
 extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
     // MARK: - REQUEST IAP PRODUCTS
+    
+    /// Returns all the available In-App Purchases and populates the iapProducts array. Triggered after calling the fetchAvailableProducts() function.
     func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
         
         if (response.products.count > 0) {
@@ -98,11 +96,14 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
         }
     }
     
+    /// Handles a situation where a user successfully restores an IAP.
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         purchaseStatusBlock?(.restored)
     }
     
     // MARK:- IAP PAYMENT QUEUE
+    
+    /// This delegate method is triggered after calling the purchaseMyProduct(index: Int) function. In this callback, you will get everything related to the IAP transaction ( like if an item has been purchased or it failed).
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction:AnyObject in transactions {
             if let trans = transaction as? SKPaymentTransaction {
@@ -110,6 +111,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                 case .purchased:
                     print("purchased")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    IAPHandler.shared.persistPurchase()
                     purchaseStatusBlock?(.purchased)
                     break
                     
@@ -120,6 +122,8 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                 case .restored:
                     print("restored")
                     SKPaymentQueue.default().finishTransaction(transaction as! SKPaymentTransaction)
+                    IAPHandler.shared.persistPurchase()
+                    purchaseStatusBlock?(.restored)
                     break
                     
                 default: break
