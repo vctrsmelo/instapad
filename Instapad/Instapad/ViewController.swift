@@ -102,7 +102,12 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         view.bringSubview(toFront: optionsButton)
         
         optionsButton.addTarget(self, action: #selector(ViewController.optionsButtonTouched), for: .touchUpInside)
-        
+    }
+    
+    @objc func appMovedToForeground() {
+        if !(UserDefaults.standard.bool(forKey: "PurchasedRemoveAds")) {
+            bannerView.load(GADRequest())
+        }
     }
     
     @objc func optionsButtonTouched() {
@@ -182,6 +187,11 @@ extension ViewController {
         bannerView.adUnitID = (UIApplication.shared.delegate as! AppDelegate).AD_UNIT_ID
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        
     }
     
     // MARK: - view positioning
