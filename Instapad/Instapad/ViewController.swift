@@ -112,9 +112,14 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     @objc func optionsButtonTouched() {
         
+        
         let alert = UIAlertController(title: "About", message: "This is not an official app by Instagram Inc. All features are loaded from the official web version, published in http://www.instagram.com", preferredStyle: UIAlertControllerStyle.alert)
         
-        alert.addAction(UIAlertAction(title: "Remove Ads (~$6.99)", style: .default, handler: { action in
+        var title = "Remove Ads"
+        if let removeAdsPrice = IAPHandler.shared.removeAdsPrice {
+            title = "Remove Ads (\(removeAdsPrice))"
+        }
+        alert.addAction(UIAlertAction(title: title, style: .default, handler: { action in
             
             print("removeu ads")
             IAPHandler.shared.purchaseMyProduct(index: 0)

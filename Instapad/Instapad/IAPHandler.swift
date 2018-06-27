@@ -20,6 +20,7 @@ class IAPHandler: NSObject {
     static let shared = IAPHandler()
     
     let REMOVE_ADS_PURCHASE_PRODUCT_ID = "removeAds"
+    var removeAdsPrice: String?
     
     fileprivate var productID = ""
     fileprivate var productsRequest = SKProductsRequest()
@@ -92,6 +93,7 @@ extension IAPHandler: SKProductsRequestDelegate, SKPaymentTransactionObserver{
                 numberFormatter.locale = product.priceLocale
                 let price1Str = numberFormatter.string(from: product.price)
                 print(product.localizedDescription + "\nfor just \(price1Str!)")
+                self.removeAdsPrice = numberFormatter.string(from: product.price)
             }
         }
     }
